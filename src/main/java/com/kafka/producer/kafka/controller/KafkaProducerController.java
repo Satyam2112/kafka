@@ -1,12 +1,10 @@
 package com.kafka.producer.kafka.controller;
 
+import com.kafka.producer.kafka.entity.User;
 import com.kafka.producer.kafka.service.KafkaMessagePublisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.stream.IntStream;
 
@@ -18,7 +16,13 @@ public class KafkaProducerController {
     private KafkaMessagePublisher publisher;
     @GetMapping("/publish/{message}")
     public ResponseEntity<?> publishMessage(@PathVariable String message){
-        IntStream.rangeClosed(1,10000).forEach(i-> publisher.sendMessageToTopic(message+"_"+i));
+        IntStream.rangeClosed(1,1).forEach(i-> publisher.sendMessageToTopic(message+"_"+i));
         return ResponseEntity.ok("Message Published ..");
+    }
+
+    @PostMapping("/publish/user")
+    public ResponseEntity<?> sentEvent(@RequestBody User user){
+        IntStream.rangeClosed(1,10).forEach(i-> publisher.sendEventToTopic(user));
+        return ResponseEntity.ok("Event Published ..");
     }
 }
