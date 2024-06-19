@@ -22,7 +22,10 @@ public class KafkaProducerController {
 
     @PostMapping("/publish/user")
     public ResponseEntity<?> sentEvent(@RequestBody User user){
-        IntStream.rangeClosed(1,10).forEach(i-> publisher.sendEventToTopic(user));
+        IntStream.rangeClosed(1,10).forEach(i-> { 
+            user.setId(i);
+            publisher.sendEventToTopic(user);
+        });
         return ResponseEntity.ok("Event Published ..");
     }
 }
