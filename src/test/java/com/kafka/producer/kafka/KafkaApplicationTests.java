@@ -6,8 +6,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class KafkaApplicationTests {
 
-	//@Test
+	@Test
 	void contextLoads() {
+		System.out.println("Running tests now....");
 	}
 
 }
